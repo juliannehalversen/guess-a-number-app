@@ -1,19 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, Dimensions, ScrollView } from 'react-native';
 
 import MainButton from '../components/MainButton';
 import Colors from '../constants/colors';
 
 const GameOverScreen = props => {
     return (
-        <View style={styles.screen}>
-            <Text>The Game is Over!</Text>
-            <View style={styles.imageContainer}>
-                <Image source={require('../assets/success.png')} style={styles.image} resizeMode="cover" fadeDuration={500}/>
+        <ScrollView>
+            <View style={styles.screen}>
+                <Text>The Game is Over!</Text>
+                <View style={styles.imageContainer}>
+                    <Image source={require('../assets/success.png')} style={styles.image} resizeMode="cover" fadeDuration={500}/>
+                </View>
+                <Text style={styles.resultText}>Your phone needed <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds to guess the number <Text style={styles.highlight}>{props.userNumber}</Text></Text>
+                <MainButton onPress={props.onRestart}>NEW GAME</MainButton>
             </View>
-            <Text style={styles.resultText}>Your phone needed <Text style={styles.highlight}>{props.roundsNumber}</Text> rounds to guess the number <Text style={styles.highlight}>{props.userNumber}</Text></Text>
-            <MainButton onPress={props.onRestart}>NEW GAME</MainButton>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -24,11 +26,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     imageContainer: {
-        borderRadius: 150,
+        borderRadius: Dimensions.get('window').width / 2,
         borderWidth: 2,
         borderColor: 'black',
-        width: 300,
-        height: 300,
+        width: Dimensions.get('window').width * 0.7,
+        height: Dimensions.get('window').width * 0.7,
         overflow: 'hidden',
         marginVertical: 30,
     },
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
     },
     resultText: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: Dimensions.get('window').height < 400 ? 16 : 20,
     },
     highlight: {
         color: Colors.primary,
